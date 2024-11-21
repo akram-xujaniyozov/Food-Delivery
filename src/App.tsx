@@ -1,5 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { FC } from "react";
+import { router, RouterProvider } from "./routes";
 
-export default function App(): ReactNode {
-  return <h1>App</h1>;
-}
+const App: FC = function () {
+  return (
+    <RouterProvider router={router} future={{ v7_startTransition: true }} />
+  );
+};
+
+export default App;

@@ -1,0 +1,46 @@
+// Product interface
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  description: string;
+}
+
+// Category interface
+export interface Category {
+  id: number;
+  category: string;
+}
+
+// Order interface
+export interface Order {
+  address: string;
+  phone: string;
+  paymentType: "cash" | "card";
+  items: Array<{
+    productId: number;
+    quantity: number;
+  }>;
+  comment?: string;
+}
+
+// SortPropertyEnum
+export enum SortPropertyEnum {
+  PRICE_DESC = "price",
+  PRICE_ASC = "-price",
+}
+
+// Sort
+export type Sort = {
+  name: string;
+  sortProperty: SortPropertyEnum;
+};
+
+// FilterSlice interface
+export interface FilterSliceState {
+  searchValue: string;
+  categoryId: number;
+  sort: Sort;
+}

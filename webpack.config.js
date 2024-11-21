@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
@@ -57,5 +58,6 @@ module.exports = {
     compress: true,
     port: 3004,
     hot: true,
+    historyApiFallback: { index: "/", disableDotRule: true },
   },
 };
