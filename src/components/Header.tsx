@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -10,9 +10,25 @@ import {
 } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { grey, orange, yellow } from "@mui/material/colors";
+
+import { useAppDispatch } from "../store";
+import { setSearchValue } from "../store/filters/slice";
+
 import { Logo, Search } from "../ui";
 
 export const Header: FC = function () {
+  const dispatch = useAppDispatch();
+  const [searchInput, setSearchInput] = useState<string>("");
+
+  const handleClick = () => {
+    dispatch(setSearchValue(searchInput));
+  };
+
+  const handleClear = () => {
+    dispatch(setSearchValue(""));
+    setSearchInput("");
+  };
+
   return (
     <AppBar
       position="static"
@@ -46,7 +62,12 @@ export const Header: FC = function () {
           </Box>
         </Link>
         <Box component="div">
-          <Search />
+          <Search
+            value={searchInput}
+            getSearchInput={setSearchInput}
+            onClickSearch={handleClick}
+            onClearSearch={handleClear}
+          />
         </Box>
         <Link to="cart">
           <Button

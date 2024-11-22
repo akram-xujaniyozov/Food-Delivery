@@ -1,27 +1,39 @@
-import React, { FC } from "react";
-import { useGetCategoriesQuery } from "../store/services";
+import React, { FC, memo } from "react";
 import { Stack, ListItem, Button } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { Category } from "../@types";
 
-export const Categories: FC = function () {
-  const { data: categories } = useGetCategoriesQuery();
+type CategoriesProps = {
+  categories: Category[] | undefined;
+  categoryName: string;
+  onChangeCategory: (name: string) => void;
+};
+
+export const Categories: FC<CategoriesProps> = memo(function ({
+  categories,
+  categoryName,
+  onChangeCategory,
+}) {
   return (
     <Stack direction="row" spacing={1}>
-      {categories?.map((cateObj) => (
-        <ListItem key={cateObj.id}>
+      {categories?.map((categoryObj) => (
+        <ListItem key={categoryObj.id}>
           <Button
             variant="contained"
             sx={{
-              bgcolor: grey[200],
-              color: grey[600],
+              bgcolor:
+                categoryObj.category === categoryName ? grey[800] : grey[200],
+              color:
+                categoryObj.category === categoryName ? grey[200] : grey[600],
               borderRadius: "15px",
               fontSize: "12px",
             }}
+            onClick={() => onChangeCategory(categoryObj.category)}
           >
-            {cateObj.category}
+            {categoryObj.category}
           </Button>
         </ListItem>
       ))}
     </Stack>
   );
-};
+});

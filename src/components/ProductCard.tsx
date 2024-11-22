@@ -46,7 +46,7 @@ export const ProductCard: FC<Product> = function ({
             borderRadius: "12px",
           }}
         >
-          + Добавить
+          в корзину
         </Button>
       </CardActions>
     </Card>

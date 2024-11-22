@@ -7,8 +7,12 @@ export const productsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://6105ea5b54b7e9ee.mokky.dev" }),
   tagTypes: ["Products"],
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({
-      query: () => `/products`,
+    getProducts: builder.query<
+      Product[],
+      { category: string; search: string; sortBy: string }
+    >({
+      query: ({ category, search, sortBy }) =>
+        `/products?${category}${search}${sortBy}`,
       providesTags: ["Products"],
     }),
   }),

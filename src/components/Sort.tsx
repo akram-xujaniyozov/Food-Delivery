@@ -1,23 +1,48 @@
 import React, { FC, useState } from "react";
-import { grey, teal, deepOrange } from "@mui/material/colors";
-import { Popover, Button, List, ListItem, Typography } from "@mui/material";
+import {
+  Popover,
+  Button,
+  List,
+  ListItem,
+  Typography,
+  Box,
+} from "@mui/material";
+
+import { grey, deepOrange } from "@mui/material/colors";
+
+import { useAppDispatch } from "../store";
+import { setSort } from "../store/filters/slice";
+import { SortPropertyEnum, SortBy } from "../@types";
+
+export const sortList: Array<SortBy> = [
+  {
+    name: "уменьшение",
+    sortProperty: SortPropertyEnum.PRICE_ASC,
+  },
+  {
+    name: "увеличение",
+    sortProperty: SortPropertyEnum.PRICE_DESC,
+  },
+];
 
 export const Sort: FC = function () {
+  const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (obj: SortBy) => {
+    dispatch(setSort(obj));
     setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const id = open ? "popover" : undefined;
 
   return (
-    <div>
+    <Box component="div">
       <Button
         aria-describedby={id}
         variant="contained"
@@ -40,12 +65,31 @@ export const Sort: FC = function () {
           horizontal: "left",
         }}
       >
-        <List>
-          <ListItem onClick={handleClose}>
-            <Typography component="p">The content of the Popover</Typography>
-          </ListItem>
+        <List sx={{ width: 185 }}>
+          {sortList.map((obj, i) => (
+            <ListItem
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              onClick={() => handleClose(obj)}
+              key={i}
+            >
+              <Typography
+                component="p"
+                sx={{
+                  fontSize: 16,
+                  textTransform: "capitalize",
+                }}
+              >
+                {obj.name}
+              </Typography>
+            </ListItem>
+          ))}
         </List>
       </Popover>
-    </div>
+    </Box>
   );
 };
