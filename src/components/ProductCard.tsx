@@ -34,7 +34,7 @@ export const ProductCard: FC<Product> = function ({
   };
 
   return (
-    <Card sx={{ padding: ".5rem", paddingTop: "1rem" }}>
+    <Card sx={{ padding: ".5rem", paddingTop: "1rem", borderRadius: "15px" }}>
       <CardMedia
         component={"img"}
         sx={{ height: 200, objectFit: "contain", objectPosition: "center" }}
