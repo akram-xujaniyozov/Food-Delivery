@@ -72,7 +72,7 @@ export const Form: FC<FormProps> = function ({
         variant="h5"
         sx={{ color: grey[600], fontSize: 24, marginBottom: 1 }}
       >
-        Заказать пиццу
+        Передать заказ
       </Typography>
       <Stack spacing={2} width={400}>
         <TextField
