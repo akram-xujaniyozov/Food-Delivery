@@ -44,3 +44,12 @@ export interface FilterSliceState {
   categoryName: string;
   sort: SortBy;
 }
+
+export interface CartItem extends Product {
+  count: number;
+}
+
+export interface CartSliceState {
+  totalPrice: number;
+  items: Array<CartItem>;
+}

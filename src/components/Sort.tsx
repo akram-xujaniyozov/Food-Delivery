@@ -16,12 +16,12 @@ import { SortPropertyEnum, SortBy } from "../@types";
 
 export const sortList: Array<SortBy> = [
   {
-    name: "уменьшение",
-    sortProperty: SortPropertyEnum.PRICE_ASC,
-  },
-  {
     name: "увеличение",
     sortProperty: SortPropertyEnum.PRICE_DESC,
+  },
+  {
+    name: "уменьшение",
+    sortProperty: SortPropertyEnum.PRICE_ASC,
   },
 ];
 
