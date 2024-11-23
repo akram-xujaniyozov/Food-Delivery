@@ -15,6 +15,7 @@ import { clearItems } from "../store/cart/slice";
 export const CartPage: FC = function () {
   const dispatch = useAppDispatch();
   const { items, totalPrice } = useSelector(selectCart);
+
   const totalCount = items.reduce(
     (sum: number, item: CartItemType) => sum + item.count,
     0
@@ -24,8 +25,6 @@ export const CartPage: FC = function () {
     if (window.confirm(`Are you sure you want to remove?`))
       dispatch(clearItems());
   };
-
-  console.log(totalPrice);
 
   if (!totalPrice) {
     return <CartEmpty />;

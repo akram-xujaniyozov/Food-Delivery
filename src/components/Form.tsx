@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import {
   TextField,
   Stack,
@@ -11,8 +11,9 @@ import {
   FormControl,
   Typography,
 } from "@mui/material";
-import { cyan, grey } from "@mui/material/colors";
+import { grey, green } from "@mui/material/colors";
 import { useForm, SubmitHandler } from "react-hook-form";
+
 import { useAddOrderMutation } from "../store/services";
 import { Order } from "../@types";
 
@@ -32,12 +33,16 @@ type FormProps = {
   productId: number;
   quantity: number;
   onCloseForm: React.Dispatch<React.SetStateAction<boolean>>;
+  getSuccessOrder: React.Dispatch<React.SetStateAction<boolean>>;
+  getErrorOrder: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const Form: FC<FormProps> = function ({
   productId,
   quantity,
   onCloseForm,
+  getSuccessOrder,
+  getErrorOrder,
 }) {
   const [addOrder, { error: orderError, isSuccess, isLoading }] =
     useAddOrderMutation();
@@ -56,12 +61,21 @@ export const Form: FC<FormProps> = function ({
 
   const onSubmit: SubmitHandler<OrderFormValues> = (data) => {
     const orderObject: Order = {
-      ...data,
+      address: data.address,
+      phone: data.phone,
       paymentType: data.payment,
       items: [{ productId, quantity }],
+      comment: data.commment,
     };
 
-    addOrder(orderObject);
+    addOrder(orderObject)
+      .unwrap()
+      .then((payload) => {
+        if (payload.items.length > 0) getSuccessOrder(true);
+      })
+      .catch((error) => {
+        if (error) getErrorOrder(true);
+      });
     onCloseForm(false);
   };
 
@@ -118,9 +132,9 @@ export const Form: FC<FormProps> = function ({
           variant="contained"
           color="primary"
           sx={{
-            color: cyan[500],
+            color: green[500],
             bgcolor: "#fff",
-            borderColor: cyan[500],
+            borderColor: green[500],
             borderStyle: "solid",
             borderWidth: "1px",
             borderRadius: 12,

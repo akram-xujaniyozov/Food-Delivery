@@ -1,5 +1,4 @@
-import React, { FC, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { FC, useState, useEffect } from "react";
 import { useAppDispatch } from "../store";
 import {
   Box,
@@ -17,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ClearIcon from "@mui/icons-material/Clear";
 import { grey, orange } from "@mui/material/colors";
+import toast, { Toaster } from "react-hot-toast";
 
 import { addItem, minusItem, removeItem } from "../store/cart/slice";
 import { CartItem as CartItemType } from "../@types";
@@ -32,6 +32,8 @@ export const CartItem: FC<CartItemType> = function ({
 }) {
   const dispatch = useAppDispatch();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [successOrder, setSuccessOrder] = useState<boolean>(false);
+  const [errorOrder, setErrorOrder] = useState<boolean>(false);
 
   const handleClickPlus = (id: number) => {
     dispatch(addItem({ id } as CartItemType));
@@ -43,6 +45,35 @@ export const CartItem: FC<CartItemType> = function ({
     if (window.confirm(`Are you sure you want to remove?`))
       dispatch(removeItem(id));
   };
+
+  useEffect(() => {
+    setSuccessOrder(false);
+  }, [successOrder]);
+
+  const toastStyles = {
+    minWidth: "250px",
+    fontSize: "18px",
+    fontFamily: "monospace",
+    padding: "12px",
+  };
+
+  if (successOrder) {
+    toast.success("Вы успешно заказывали!", {
+      duration: 4000,
+      position: "top-right",
+      style: toastStyles,
+      icon: "✅",
+    });
+  }
+
+  if (errorOrder) {
+    toast.error("Error", {
+      duration: 4000,
+      position: "top-right",
+      style: toastStyles,
+      icon: "❌",
+    });
+  }
 
   return (
     <Box>
@@ -166,6 +197,8 @@ export const CartItem: FC<CartItemType> = function ({
                       productId={id}
                       quantity={count}
                       onCloseForm={setOpenDialog}
+                      getSuccessOrder={setSuccessOrder}
+                      getErrorOrder={setErrorOrder}
                     />
                   </DialogContent>
                 </Dialog>
@@ -174,6 +207,7 @@ export const CartItem: FC<CartItemType> = function ({
           </Grid2>
         </Grid2>
       </Card>
+      <Toaster />
     </Box>
   );
 };
