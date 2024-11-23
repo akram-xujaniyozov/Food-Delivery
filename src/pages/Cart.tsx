@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store";
 import { Box, Typography, Button, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { grey } from "@mui/material/colors";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { grey } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
 import { CartItem as CartItemType } from "../@types";
 import { selectCart } from "../store/cart/selector";
-import { CartItem } from "../components/";
+import { CartItem, CartEmpty } from "../components/";
 import { clearItems } from "../store/cart/slice";
 
 export const CartPage: FC = function () {
@@ -24,6 +24,12 @@ export const CartPage: FC = function () {
     if (window.confirm(`Are you sure you want to remove?`))
       dispatch(clearItems());
   };
+
+  console.log(totalPrice);
+
+  if (!totalPrice) {
+    return <CartEmpty />;
+  }
 
   return (
     <Box component="div" sx={{ width: "60%", marginX: "auto" }}>

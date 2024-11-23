@@ -9,8 +9,9 @@ import {
   FormHelperText,
   InputLabel,
   FormControl,
+  Typography,
 } from "@mui/material";
-import { cyan } from "@mui/material/colors";
+import { cyan, grey } from "@mui/material/colors";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAddOrderMutation } from "../store/services";
 import { Order } from "../@types";
@@ -38,7 +39,8 @@ export const Form: FC<FormProps> = function ({
   quantity,
   onCloseForm,
 }) {
-  const [addOrder, { error: orderError, isLoading }] = useAddOrderMutation();
+  const [addOrder, { error: orderError, isSuccess, isLoading }] =
+    useAddOrderMutation();
   const {
     register,
     handleSubmit,
@@ -65,6 +67,13 @@ export const Form: FC<FormProps> = function ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Typography
+        component="div"
+        variant="h5"
+        sx={{ color: grey[600], fontSize: 24, marginBottom: 1 }}
+      >
+        Заказать пиццу
+      </Typography>
       <Stack spacing={2} width={400}>
         <TextField
           label="Address"

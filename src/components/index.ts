@@ -6,3 +6,4 @@ export * from "./ProductCard";
 export * from "./ProductList";
 export * from "./Form";
 export * from "./CartItem";
+export * from "./CartEmpty";

@@ -41,7 +41,7 @@ module.exports = {
             loader: "url-loader",
             options: {
               limit: false,
-              name: "./assets/images/[name].[ext]",
+              name: "./assets/[name].[ext]",
             },
           },
         ],
