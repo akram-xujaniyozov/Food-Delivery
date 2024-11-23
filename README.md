@@ -2,7 +2,7 @@
 Food Delivery App
 
 # Using technoligies
- Created using these technologies: React, TS, Redux-Toolkit Query, React Hook Form, Material UI
+Created using these technologies: React, TS, Redux-Toolkit Query, React Hook Form, Material UI
 
 # Instruction installing
 npm install or npm i or yarn -i
