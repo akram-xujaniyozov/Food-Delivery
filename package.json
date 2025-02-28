@@ -2,7 +2,7 @@
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack --mode production"
+    "build": "npx webpack --mode production"
   },
   "dependencies": {
     "react": "^18.3.1",
